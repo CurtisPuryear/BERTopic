@@ -831,7 +831,7 @@ class BERTopic:
                                     topic_frequency[topic],
                                     timestamp) for topic, values in words_per_topic.items()]
             topics_over_time.extend(topics_at_timestamp)
-            words_per_topic_over_time.extend(words_per_topic)
+            words_per_topic_over_time.append(words_per_topic)
 
             if evolution_tuning:
                 previous_topics = sorted(list(documents_per_topic.Topic.values))
