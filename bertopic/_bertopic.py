@@ -790,6 +790,7 @@ class BERTopic:
 
         # For each unique timestamp, create topic representations
         topics_over_time = []
+        words_per_topic_over_time = []
         for index, timestamp in tqdm(enumerate(timestamps), disable=not self.verbose):
 
             # Calculate c-TF-IDF representation for a specific timestamp
@@ -830,12 +831,13 @@ class BERTopic:
                                     topic_frequency[topic],
                                     timestamp) for topic, values in words_per_topic.items()]
             topics_over_time.extend(topics_at_timestamp)
+            words_per_topic_over_time.extend(words_per_topic)
 
             if evolution_tuning:
                 previous_topics = sorted(list(documents_per_topic.Topic.values))
                 previous_c_tf_idf = c_tf_idf.copy()
 
-        return pd.DataFrame(topics_over_time, columns=["Topic", "Words", "Frequency", "Timestamp"])
+        return pd.DataFrame(topics_over_time, columns=["Topic", "Words", "Frequency", "Timestamp"]), words_per_topic_over_time
 
     def topics_per_class(self,
                          docs: List[str],
